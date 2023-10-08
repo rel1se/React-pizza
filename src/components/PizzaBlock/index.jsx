@@ -1,6 +1,6 @@
 import React from "react";
 
-function PizzaBlock({title, price, imageUrl, types, sizes}) {
+function Index({title, price, imageUrl, types, sizes}) {
     const typeNames = ['тонкое', 'традиционное']
     const [activeType, setActiveType] = React.useState(0)
     const [activeSize, setActiveSize] = React.useState(0)
@@ -16,14 +16,14 @@ function PizzaBlock({title, price, imageUrl, types, sizes}) {
             <ul>
                 {
                     types.map((typeId) => (
-                        <li onClick={() => setActiveType(typeId)} className={activeType === typeId ? "active" : ""}>{typeNames[typeId]}</li>
+                        <li key={typeId} onClick={() => setActiveType(typeId)} className={activeType === typeId ? "active" : ""}>{typeNames[typeId]}</li>
                     ))
                 }
             </ul>
             <ul>
                 {
                     sizes.map((size, index) => (
-                        <li onClick={() => setActiveSize(index)} className={activeSize === index ? "active" : ""}>{size} см.</li>
+                        <li key={index} onClick={() => setActiveSize(index)} className={activeSize === index ? "active" : ""}>{size} см.</li>
                     ))
                 }
             </ul>
@@ -50,4 +50,4 @@ function PizzaBlock({title, price, imageUrl, types, sizes}) {
     </div>)
 }
 
-export default PizzaBlock
+export default Index
