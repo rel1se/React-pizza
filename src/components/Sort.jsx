@@ -1,16 +1,23 @@
 import React from 'react'
+import {useDispatch, useSelector} from "react-redux";
+import {setSort} from "../redux/slices/filterSlice";
 
-function Sort({value, onChangeSort}) {
+
+const list = [
+    {name: 'популярности (DESC)', sortProperty: 'rating'},
+    {name: 'популярности (ASC)', sortProperty: '-rating'},
+    {name: 'цене (DESC)', sortProperty: 'price'},
+    {name: 'цене (ASC)', sortProperty: '-price'},
+    {name: 'алфавиту (DESC)', sortProperty: 'title'},
+    {name: 'алфавиту (ASC)', sortProperty: '-title'}]
+
+function Sort() {
+    const dispatch = useDispatch()
+    const sortType = useSelector(state => state.filter.sort)
     const [open, setIsOpen] = React.useState(false)
-    const list = [
-        {name: 'популярности (DESC)', sortProperty: 'rating'},
-        {name: 'популярности (ASC)', sortProperty: '-rating'},
-        {name: 'цене (DESC)', sortProperty: 'price'},
-        {name: 'цене (ASC)', sortProperty: '-price'},
-        {name: 'алфавиту (DESC)', sortProperty: 'title'},
-        {name: 'алфавиту (ASC)', sortProperty: '-title'}]
+
     const onClickListItem = (index) => {
-        onChangeSort(index)
+        dispatch(setSort(index))
         setIsOpen(false)
     }
     return (<div className="sort">
@@ -28,7 +35,7 @@ function Sort({value, onChangeSort}) {
                 />
             </svg>
             <b>Сортировка по:</b>
-            <span onClick={() => setIsOpen(!open)}>{value.name}</span>
+            <span onClick={() => setIsOpen(!open)}>{sortType.name}</span>
         </div>
         {open &&
             (<div className="sort__popup">
@@ -36,7 +43,7 @@ function Sort({value, onChangeSort}) {
                     {
                         list.map((obj, index) => (
                             <li key={index} onClick={() => onClickListItem(obj)}
-                                className={value.sortProperty === index ? "active" : ""}>{obj.name}</li>
+                                className={sortType.sortProperty === index ? "active" : ""}>{obj.name}</li>
                         ))
                     }
                 </ul>
