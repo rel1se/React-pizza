@@ -60,7 +60,7 @@ const Cart = () => {
                     </div>
                     <div className="content__items">
                         {
-                            items.map((e) => e.count > 0 && <CartItem key={e.id} {...e} />)
+                            items.map((item) => item.count > 0 && <CartItem key={item.id} {...item} />)
                         }
                     </div>
                     <div className="cart__bottom">
@@ -85,7 +85,6 @@ const Cart = () => {
                     </div>
                 </div>
             </div>
-
     );
 }
 

@@ -1,17 +1,16 @@
 import React from 'react';
 import {useDispatch} from "react-redux";
-import {addCartItem, removeCartItem, minusItem, clearCart} from "../redux/slices/cartSlice";
+import {addCartItem, removeCartItem, minusItem} from "../redux/slices/cartSlice";
 
-function CartItem({id, title, price, imageUrl, type, count, size}) {
+function CartItem({id, title, price, imageUrl, type, count}) {
     const dispatch = useDispatch()
 
     const onClickPlus = () => {
-        dispatch(addCartItem({id, type, size}))
+        dispatch(addCartItem({id}))
     }
     const onClickMinus = () => {
-        dispatch(minusItem(id, price, type, size))
+        dispatch(minusItem({id}))
     }
-
     const onClickRemove = () => {
         if (window.confirm('Are you sure about that?')){
             dispatch(removeCartItem(id))
