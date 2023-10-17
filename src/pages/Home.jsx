@@ -7,10 +7,10 @@ import {useNavigate} from 'react-router-dom'
 import Categories from "../components/Categories";
 import Sort, {sortList} from "../components/Sort";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
-import Index from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import {SearchContext} from "../App";
 import {setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
+import PizzaBlock from "../components/PizzaBlock";
 
 
 const Home = () => {
@@ -89,7 +89,7 @@ const Home = () => {
     }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
     const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-    const pizzas = items.map((obj) => (<Index key={obj.id}{...obj} />))
+    const pizzas = items.map((obj) => (<PizzaBlock key={obj.id}{...obj} />))
     return (
         <div className="container">
             <div className="content__top">
