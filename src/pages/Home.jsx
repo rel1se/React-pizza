@@ -9,8 +9,8 @@ import Sort, {sortList} from "../components/Sort";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
 import {SearchContext} from "../App";
-import {setCategoryId, setCurrentPage, setFilters, initialState} from "../redux/slices/filterSlice";
-import {fetchPizzas} from "../redux/slices/pizzasSlice";
+import {setCategoryId, setCurrentPage, setFilters, initialState, selectFilter} from "../redux/slices/filterSlice";
+import {fetchPizzas, selectPizzaData} from "../redux/slices/pizzasSlice";
 import PizzaBlock from "../components/PizzaBlock";
 
 
@@ -21,10 +21,8 @@ const Home = () => {
     const isSearch = React.useRef(false)
     const isMounted = React.useRef(false)
 
-    const {items,status} = useSelector(state => state.pizza)
-    const {categoryId, currentPage, sort} = useSelector(state => state.filter)
-
-    const {searchValue} = React.useContext(SearchContext)
+    const {items,status} = useSelector(selectPizzaData)
+    const {categoryId, currentPage, sort, searchValue} = useSelector(selectFilter)
 
     const onClickCategory = (id) => {
         dispatch(setCategoryId(id))
@@ -61,7 +59,8 @@ const Home = () => {
     React.useEffect(() => {
         if (window.location.search) {
             const params = qs.parse(window.location.search.substring(1))
-            if (initialState.categoryId === Number(params.categoryId) && initialState.sort.sortProperty === params.sortProperty && initialState.currentPage === Number(params.currentPage)) {
+            if (initialState.categoryId === Number(params.categoryId) && initialState.sort.sortProperty === params.sortProperty
+                && initialState.currentPage === Number(params.currentPage)) {
                 getPizzas();
             }
             const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty)
