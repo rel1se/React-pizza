@@ -2,7 +2,7 @@ import React from "react";
 import qs from 'qs'
 
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 import Categories from "../components/Categories";
 import Sort, {sortList} from "../components/Sort";
@@ -83,7 +83,7 @@ const Home = () => {
     }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
     const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-    const pizzas = items.map((obj) => (<PizzaBlock key={obj.id}{...obj} />))
+    const pizzas = items.map((obj) => (<Link  key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj} /></Link>))
     return (
         <div className="container">
             <div className="content__top">

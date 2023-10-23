@@ -2,12 +2,12 @@ import './scss/app.scss'
 
 import React from 'react'
 import {Route, Routes} from "react-router";
-import {useDispatch, useSelector} from "react-redux";
 
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
+import FullPizza from "./pages/FullPizza";
 
 export const SearchContext = React.createContext({})
 
@@ -24,6 +24,10 @@ function App() {
                     </Route>
                     <Route path="/cart" element={
                         <Cart/>
+                    }>
+                    </Route>
+                    <Route path="/pizza/:id" element={
+                        <FullPizza/>
                     }>
                     </Route>
                     <Route path="*" element={
