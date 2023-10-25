@@ -2,13 +2,12 @@ import React from "react";
 import qs from 'qs'
 
 import {useDispatch, useSelector} from "react-redux";
-import {Link, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 import Categories from "../components/Categories";
 import Sort, {sortList} from "../components/Sort";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
-import {SearchContext} from "../App";
 import {setCategoryId, setCurrentPage, setFilters, initialState, selectFilter} from "../redux/slices/filterSlice";
 import {fetchPizzas, selectPizzaData} from "../redux/slices/pizzasSlice";
 import PizzaBlock from "../components/PizzaBlock";
@@ -40,7 +39,7 @@ const Home = () => {
         try {
             dispatch(fetchPizzas({currentPage, category, sortBy, order,  search}))
         }catch (e) {
-            console.error("Fetch error", e)
+            alert("Fetch error")
         }
     }
     React.useEffect(() => {
@@ -83,7 +82,7 @@ const Home = () => {
     }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
     const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-    const pizzas = items.map((obj) => (<Link  key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj} /></Link>))
+    const pizzas = items.map((obj) => (<PizzaBlock key={obj.id} {...obj} />))
     return (
         <div className="container">
             <div className="content__top">

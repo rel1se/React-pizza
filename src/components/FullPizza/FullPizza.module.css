@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.pizzaInfo {
+    display: flex;
+    align-items: center;
+}
+.pizzaImage {
+    max-width: 50%;
+}
+.pizzaDetails {
+    padding: 20px;
+    margin-left: 100px;
+}
+.pizzaName {
+    font-weight: 800;
+    font-size: 38px;
+    margin-bottom: 50px;
+}
+.pizzaPrice {
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 27px;
+    letter-spacing: 0.015em;
+}
+.feature {
+    display: block;
+    font-weight: 400;
+    font-size: 18px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 0;
+}
+.feature li {
+    display: block;
+    letter-spacing: -1ex;
+    margin: 5px 0;
+}
+.featureLeft {
+    margin-right: -30%;
+    width: 69%;
+    vertical-align: top;
+    overflow: hidden;
+    display: inline-block;
+    letter-spacing: normal;
+}
+.featureLeft:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+    margin: 0 -99% 0 3px;
+    vertical-align: baseline;
+    border-bottom: 1px dashed #888;
+}
+.featureRight {
+    display: inline-block;
+    letter-spacing: normal;
+    padding-left: 3px;
+    margin-left: 30%;
+    width: 30%;
+    vertical-align: bottom;
+}
