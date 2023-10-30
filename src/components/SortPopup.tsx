@@ -1,31 +1,40 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {setSort} from "../redux/slices/filterSlice";
+import {setSort, sortFilterValue, SortPropertyEnum} from "../redux/slices/filterSlice";
 
 
-export const sortList = [
-    {name: 'популярности (DESC)', sortProperty: 'rating'},
-    {name: 'популярности (ASC)', sortProperty: '-rating'},
-    {name: 'цене (DESC)', sortProperty: 'price'},
-    {name: 'цене (ASC)', sortProperty: '-price'},
-    {name: 'алфавиту (DESC)', sortProperty: 'title'},
-    {name: 'алфавиту (ASC)', sortProperty: '-title'}]
+type SortItem = {
+    name: string;
+    sortProperty: SortPropertyEnum;
+}
+type PopupClick = MouseEvent & {
+    path: Node[]
+}
+export const sortList: SortItem[] = [
+    {name: 'популярности (DESC)', sortProperty: SortPropertyEnum.RATING_DESC},
+    {name: 'популярности (ASC)', sortProperty: SortPropertyEnum.RATING_ASC},
+    {name: 'цене (DESC)', sortProperty: SortPropertyEnum.PRICE_DESC},
+    {name: 'цене (ASC)', sortProperty: SortPropertyEnum.PRICE_ASC},
+    {name: 'алфавиту (DESC)', sortProperty: SortPropertyEnum.TITLE_DESC},
+    {name: 'алфавиту (ASC)', sortProperty: SortPropertyEnum.TITLE_ASC}
+]
 
-function Sort() {
+const SortPopup: React.FC = () => {
     const dispatch = useDispatch()
-    const sortType = useSelector(state => state.filter.sort)
+    const sortType = useSelector(sortFilterValue)
     const [open, setIsOpen] = React.useState(false)
-    const sortRef = React.useRef()
+    const sortRef = React.useRef<HTMLDivElement>(null)
 
-    const onClickListItem = (index) => {
-        dispatch(setSort(index))
+    const onClickListItem = (obj: SortItem) => {
+        dispatch(setSort(obj))
         setIsOpen(false)
     }
 
     React.useEffect(() => {
-        const handleOnClickSort = (event) => {
-            const path = event.composedPath ? event.composedPath() : event.path;
-            if (!path.includes(sortRef.current)) {
+        const handleOnClickSort = (event: MouseEvent) => {
+            const _event = event as PopupClick
+            const path = _event.composedPath ? _event.composedPath() : _event.path;
+            if (sortRef.current && !path.includes(sortRef.current)) {
                 setIsOpen(false)
             }
         }
@@ -59,7 +68,7 @@ function Sort() {
                         {
                             sortList.map((obj, index) => (
                                 <li key={index} onClick={() => onClickListItem(obj)}
-                                    className={sortType.sortProperty === index ? "active" : ""}>{obj.name}</li>
+                                    className={sortType.sortProperty === obj.sortProperty ? "active" : ""}>{obj.name}</li>
                             ))
                         }
                     </ul>
@@ -67,4 +76,4 @@ function Sort() {
         </div>)
 }
 
-export default Sort
+export default SortPopup

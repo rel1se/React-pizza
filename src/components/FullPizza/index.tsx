@@ -1,20 +1,28 @@
 import {useParams} from "react-router"
 import React from "react"
 import axios from "axios";
-import styles from './FullPizza.module.css'
-import {addCartItem, selectCartItemByID} from "../../redux/slices/cartSlice";
+import styles from './FullPizza.module.scss'
+import {addCartItem, CartItem, selectCartItemByID} from "../../redux/slices/cartSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {sizeTypes, typeNames} from "../PizzaBlock";
 import {useNavigate} from "react-router-dom";
 
-function FullPizza() {
+const FullPizza: React.FC = () => {
     const dispatch = useDispatch()
     const params = useParams()
     const navigate = useNavigate()
-    const [pizza, setPizza] = React.useState()
+    const [pizza, setPizza] = React.useState<{
+        imageUrl: string,
+        price: number,
+        title: string,
+        types: number[],
+        sizes: number[],
+        info: number[]
+    }>()
     const [activePizzaType, setActivePizzaType] = React.useState(0)
     const [activePizzaSize, setActivePizzaSize] = React.useState(0)
-    const cartItem = useSelector(selectCartItemByID(params.id))
+
+    const cartItem = useSelector(selectCartItemByID(params.id!))
 
 
     React.useEffect(() => {
@@ -38,10 +46,10 @@ function FullPizza() {
             type: typeNames[activePizzaType],
             size: sizeTypes[activePizzaSize]
         }
-        dispatch(addCartItem(item))
+        dispatch(addCartItem(item as CartItem))
     }
     if (!pizza) {
-        return 'Loading...'
+        return <>'Loading...'</>
     }
     return (
         <div className="container">

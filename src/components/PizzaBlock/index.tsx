@@ -1,11 +1,19 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addCartItem, selectCartItemByID} from '../../redux/slices/cartSlice'
+import {addCartItem, CartItem, selectCartItemByID} from '../../redux/slices/cartSlice'
 import {Link} from "react-router-dom";
 
 export const typeNames = ['тонкое', 'традиционное']
 export const sizeTypes = [26, 30, 40]
-function PizzaBlock({id, title, price, imageUrl, types, sizes}) {
+type PizzaBlockProps = {
+    id: string;
+    title: string;
+    price: number;
+    imageUrl: string;
+    types: number[];
+    sizes: number[];
+}
+const PizzaBlock: React.FC<PizzaBlockProps> = ({id, title, price, imageUrl, types, sizes}) => {
     const dispatch = useDispatch()
     const cartItem = useSelector(selectCartItemByID(id))
     const [activeType, setActiveType] = React.useState(0)
@@ -13,15 +21,15 @@ function PizzaBlock({id, title, price, imageUrl, types, sizes}) {
 
     const addedCount = cartItem ? cartItem.count : 0
     const onClickAdd = () => {
-        const item = {
+        const item: CartItem = {
             id,
             title,
             price,
             imageUrl,
             type: typeNames[activeType],
-            size: sizeTypes[activeSize]
+            size: sizeTypes[activeSize],
+            count: 0
         }
-        console.log(item)
         dispatch(addCartItem(item))
     }
 
@@ -34,20 +42,22 @@ function PizzaBlock({id, title, price, imageUrl, types, sizes}) {
                         src={imageUrl}
                         alt="Pizza"
                     />
+                    <h4 className="pizza-block__title">{title}</h4>
                 </Link>
-                <h4 className="pizza-block__title">{title}</h4>
                 <div className="pizza-block__selector">
                     <ul>
                         {
                             types.map((typeId) => (
-                                <li key={typeId} onClick={() => setActiveType(typeId)} className={activeType === typeId ? "active" : ""}>{typeNames[typeId]}</li>
+                                <li key={typeId} onClick={() => setActiveType(typeId)}
+                                    className={activeType === typeId ? "active" : ""}>{typeNames[typeId]}</li>
                             ))
                         }
                     </ul>
                     <ul>
                         {
                             sizes.map((size, index) => (
-                                <li key={index} onClick={() => setActiveSize(index)} className={activeSize === index ? "active" : ""}>{size} см.</li>
+                                <li key={index} onClick={() => setActiveSize(index)}
+                                    className={activeSize === index ? "active" : ""}>{size} см.</li>
                             ))
                         }
                     </ul>
