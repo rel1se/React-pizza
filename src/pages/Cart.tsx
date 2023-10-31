@@ -1,9 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {clearCart, selectCartItems} from "../redux/slices/cartSlice";
 import CartItemBlock from "../components/CartItemBlock";
 import {CartEmpty} from "../components/CartEmpty";
+import {clearCart} from "../redux/slices/cart/slice";
+import {selectCartItems} from "../redux/slices/cart/selectors";
+import {CartItem} from "../redux/slices/cart/types";
 
 const Cart = () => {
     const dispatch = useDispatch()
@@ -60,7 +62,7 @@ const Cart = () => {
                     </div>
                     <div className="content__items">
                         {
-                            items.map((item: any) => item.count > 0 && <CartItemBlock key={item.id} {...item} />)
+                            items.map((item: CartItem) => item.count > 0 && <CartItemBlock key={item.id} {...item} />)
                         }
                     </div>
                     <div className="cart__bottom">

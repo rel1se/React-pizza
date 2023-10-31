@@ -1,11 +1,16 @@
 import {useParams} from "react-router"
 import React from "react"
 import axios from "axios";
-import styles from './FullPizza.module.scss'
-import {addCartItem, CartItem, selectCartItemByID} from "../../redux/slices/cartSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {sizeTypes, typeNames} from "../PizzaBlock";
 import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+
+import styles from './FullPizza.module.scss'
+import {sizeTypes, typeNames} from "../PizzaBlock";
+import {addCartItem} from "../../redux/slices/cart/slice";
+import {CartItem} from "../../redux/slices/cart/types";
+import {selectCartItemByID} from "../../redux/slices/cart/selectors";
+
+
 
 const FullPizza: React.FC = () => {
     const dispatch = useDispatch()
@@ -56,7 +61,7 @@ const FullPizza: React.FC = () => {
             <div className={styles.pizzaInfo}>
                 <img className={styles.pizzaImage} src={pizza.imageUrl} alt="Пицца"/>
                 <div className={styles.pizzaDetails}>
-                    <h1 className={styles.pizzaName}>Пицца {pizza.title}</h1>
+                    <h1 className={styles.pizzaName}>{pizza.title}</h1>
                     <p className={styles.pizzaPrice}>от {pizza.price} ₽</p>
                     <ul className={styles.feature}>
                         <li>

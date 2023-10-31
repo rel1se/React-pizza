@@ -1,20 +1,22 @@
-import React from "react";
+import React, {memo} from "react";
 import qs from 'qs'
 
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from 'react-router-dom'
 
 import Categories from "../components/Categories";
-import SortPopup, {sortList} from "../components/SortPopup";
+import SortPopup from "../components/SortPopup";
 import {Skeleton} from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
-import {setCategoryId, setCurrentPage, setFilters, initialState, selectFilter, Sort} from "../redux/slices/filterSlice";
-import {fetchPizzas, SearchPizzaParams, selectPizzaData} from "../redux/slices/pizzasSlice";
 import PizzaBlock from "../components/PizzaBlock";
 import {useAppDispatch} from "../redux/store";
+import {selectPizzaData} from "../redux/slices/pizza/selectors";
+import {setCategoryId, setCurrentPage} from "../redux/slices/filter/slice";
+import {fetchPizzas} from "../redux/slices/pizza/slice";
+import {selectFilter} from "../redux/slices/filter/selectors";
 
 
-const Home = () => {
+const Home: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
@@ -24,9 +26,9 @@ const Home = () => {
     const {items,status} = useSelector(selectPizzaData)
     const {categoryId, currentPage, sort, searchValue} = useSelector(selectFilter)
 
-    const onClickCategory = (id: number) => {
+    const onClickCategory = React.useCallback((id: number) => {
         dispatch(setCategoryId(id))
-    }
+    }, [])
     const onChangePage = (value: number) => {
         dispatch(setCurrentPage(value))
     }
@@ -98,8 +100,8 @@ const Home = () => {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={categoryId} onClickCategory={(id: number) => onClickCategory(id)}/>
-                <SortPopup/>
+                <Categories value={categoryId} onClickCategory={onClickCategory}/>
+                <SortPopup value={sort}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {
