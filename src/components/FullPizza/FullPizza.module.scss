@@ -1,18 +1,16 @@
 .container {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    height: 100vh;
+    height: 50vh;
 }
 .pizzaInfo {
     display: flex;
     align-items: center;
 }
-.pizzaImage {
-    max-width: 50%;
-}
 .pizzaDetails {
     padding: 20px;
+    width: 40vh;
     margin-left: 100px;
 }
 .pizzaName {

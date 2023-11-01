@@ -123,7 +123,6 @@ const Home: React.FC = () => {
                         }
                     </div>
             }
-
             <Pagination currentPage={currentPage} onChangePage={onChangePage}/>
         </div>
     )
