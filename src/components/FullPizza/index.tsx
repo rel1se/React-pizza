@@ -9,7 +9,7 @@ import {sizeTypes, typeNames} from "../PizzaBlock";
 import {addCartItem} from "../../redux/slices/cart/slice";
 import {CartItem} from "../../redux/slices/cart/types";
 import {selectCartItemByID} from "../../redux/slices/cart/selectors";
-import Skeleton from "./Skeleton";
+import {FullPizzaSkeleton} from "./FullPizzaSkeleton";
 
 
 
@@ -55,7 +55,10 @@ const FullPizza: React.FC = () => {
         dispatch(addCartItem(item as CartItem))
     }
     if (!pizza) {
-        return <Skeleton/>
+        if (window.screen.width > 1250){
+            return <FullPizzaSkeleton/>
+        }
+        return <div>Загрузка...</div>
     }
     return (
         <div className={styles.container}>

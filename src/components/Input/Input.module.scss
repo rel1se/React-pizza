@@ -1,6 +1,9 @@
 .root {
   position: relative;
   left: -120px;
+  @media (max-width: 1250px) {
+   left: 0px;
+  }
 }
 
 .input {
@@ -13,6 +16,12 @@
 
   &:focus {
     border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  @media (max-width: 1250px) {
+    width: 300px;
+  }
+  @media (max-width: 1000px) {
+    width: 200px;
   }
 }
 
